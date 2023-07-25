@@ -1,6 +1,5 @@
 package com.leonardovbdo.server;
 
-import com.leonardovbdo.server.enumeration.Status;
 import com.leonardovbdo.server.models.Server;
 import com.leonardovbdo.server.repositories.ServerRepository;
 import org.springframework.boot.CommandLineRunner;
