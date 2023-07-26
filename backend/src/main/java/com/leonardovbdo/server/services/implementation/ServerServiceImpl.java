@@ -82,4 +82,5 @@ public class ServerServiceImpl implements ServerService {
                 .path("/server/image/" + imageNames[new Random().nextInt(4)])
                 .toUriString();
     }
+
 }
