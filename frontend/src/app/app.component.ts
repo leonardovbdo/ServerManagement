@@ -12,8 +12,10 @@ import { DataState } from './enum/data-state.enum';
 })
 export class AppComponent implements OnInit {
   appState$: Observable<AppState<CustomResponse>>;
-  constructor(private serverService: ServerService) {}
+  readonly DataState = DataState;
 
+
+  constructor(private serverService: ServerService) {}
 
   ngOnInit(): void {
     this.appState$ = this.serverService.servers$
