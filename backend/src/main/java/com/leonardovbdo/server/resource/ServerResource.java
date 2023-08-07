@@ -29,6 +29,7 @@ public class ServerResource {
     @GetMapping("/list")
     public ResponseEntity<Response> getServer() throws InterruptedException {
         TimeUnit.SECONDS.sleep(3);
+//        throw new RuntimeException("Something went wrong");
         return ResponseEntity.ok(
                 Response.builder()
                         .timeStamp(now())
