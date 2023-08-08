@@ -5,10 +5,13 @@ import com.leonardovbdo.server.models.Server;
 import com.leonardovbdo.server.services.implementation.ServerServiceImpl;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.concurrent.TimeUnit;
@@ -25,6 +28,8 @@ import static org.springframework.http.MediaType.IMAGE_PNG_VALUE;
 @RequiredArgsConstructor
 public class ServerResource {
     private final ServerServiceImpl serverService;
+
+    private final ResourceLoader resourceLoader;
 
     @GetMapping("/list")
     public ResponseEntity<Response> getServer() throws InterruptedException {
@@ -96,6 +101,9 @@ public class ServerResource {
 
     @GetMapping(path = "/image/{fileName}", produces = IMAGE_PNG_VALUE)
     public byte[] getServerImage(@PathVariable("fileName")String fileName) throws IOException {
-        return Files.readAllBytes(Paths.get(System.getProperty("user.home") + "/Downloads/images/" + fileName ));
+        Resource resource = resourceLoader.getResource("classpath:static/assets/" + fileName);
+        try (InputStream inputStream = resource.getInputStream()) {
+            return inputStream.readAllBytes();
+        }
     }
 }
