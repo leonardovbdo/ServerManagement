@@ -12,6 +12,7 @@ import org.springframework.web.filter.CorsFilter;
 
 import java.util.Arrays;
 
+import static com.leonardovbdo.server.enumeration.Status.SERVER_DOWN;
 import static com.leonardovbdo.server.enumeration.Status.SERVER_UP;
 
 @SpringBootApplication
@@ -32,7 +33,7 @@ public class ServerApplication {
 							"16 GB",
 							"Personal PC",
 							"http://localhost:8080/server/image/server1.png",
-							SERVER_UP
+							SERVER_DOWN
 					)
 			);
 			serverRepository.save(
@@ -54,7 +55,7 @@ public class ServerApplication {
 							"32 GB",
 							"Web Server",
 							"http://localhost:8080/server/image/server3.png",
-							SERVER_UP
+							SERVER_DOWN
 					)
 			);
 			serverRepository.save(
