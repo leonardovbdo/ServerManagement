@@ -8,7 +8,7 @@
                       <h2>Servers Manager</h2>
                   </div>
                   <div class="col-sm-6">
-                      <button type="button" class="btn btn-primary">Print Report</button>
+                      <button (click)="printReport()" type="button" class="btn btn-primary">Print Report</button>
 
                       <a href="#addEmployeeModal" class="btn btn-success" data-toggle="modal">
                           <i class="material-icons">&#xE147;</i>
@@ -68,7 +68,7 @@
                                   </a>
                               </td>
                               <td>
-                                  <a class="delete" data-toggle="modal"
+                                  <a (click)="deleteServer(server)" class="delete" data-toggle="modal"
                                       style="cursor: pointer;"><i class="material-icons" data-toggle="tooltip"
                                           title="Delete">&#xE872;</i></a>
                               </td>

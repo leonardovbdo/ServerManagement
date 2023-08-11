@@ -34,7 +34,7 @@ export class AppComponent implements OnInit {
     .pipe(
       map(response => {
         this.dataSubject.next(response);
-        return { dataState: DataState.LOADED_STATE, appData: response }
+        return { dataState: DataState.LOADED_STATE, appData: { ...response, data: { servers: response.data.servers.reverse() } } }
       }),
       startWith({ dataState: DataState.LOADING_STATE }),
       catchError((error: string) => {
@@ -93,6 +93,37 @@ export class AppComponent implements OnInit {
         return of({ dataState: DataState.ERROR_STATE, error })
       })
     );
+  }
+
+  deleteServer(server: Server): void {
+    this.appState$ = this.serverService.delete$(server.id)
+    .pipe(
+      map(response => {
+        this.dataSubject.next(
+          { ...response, data:
+            { servers: this.dataSubject.value.data.servers.filter(s => s.id !== server.id) } }
+        );
+        return { dataState: DataState.LOADED_STATE, appData: this.dataSubject.value }
+      }),
+      startWith({ dataState: DataState.LOADED_STATE, appData: this.dataSubject.value }),
+      catchError((error: string) => {
+        this.filterSubject.next('');
+        return of({ dataState: DataState.ERROR_STATE, error })
+      })
+    );
+  }
+
+  printReport(): void {
+    // window.print(); // Imprimir como PDF
+    let dataType = 'application/vnd.ms-excel.sheet.macroEnabled.12';
+    let tableSelect = document.getElementById('servers');
+    let tableHtml = tableSelect.outerHTML.replace(/ /g, '%20');
+    let downloadLink = document.createElement('a');
+    document.body.appendChild(downloadLink);
+    downloadLink.href = 'data:' + dataType + ', ' + tableHtml;
+    downloadLink.download = 'server-report.xls';
+    downloadLink.click();
+    document.body.removeChild(downloadLink); // Baixar como planilha
   }
 
 }
